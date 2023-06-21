@@ -1,4 +1,4 @@
-"""A madlib game that compliments its users."""
+
 
 from random import choice
 
@@ -8,7 +8,7 @@ from flask import Flask, render_template, request
 # Flask wants to know this to know what any imported things are relative to.
 app = Flask(__name__)
 
-AWESOMENESS = [
+COMPLIMENT = [
     "awesome",
     "terrific",
     "fantastic",
@@ -33,18 +33,25 @@ def start_here():
     return "Hi! This is the home page."
 
 
-# @app.route("/hello")
-# def say_hello():
-#     """Say hello to user."""
 
-#     return render_template("hello.html")
+@app.route("/hello")
+def say_hello():
+    """Say hello to user."""
+
+    return render_template("hello.html")
+
+@app.route("/greet")
+def greet_user():
+    player = request.args.get('person')
+    nice_thing = choice(COMPLIMENT)
+    return render_template("compliment.html", name=player, compliment=nice_thing)
 
 
 @app.route("/game")
 def ask_question():
     """Greet user with question."""
 
-    return render_template("compliment.html")
+    return render_template("game.html")
 
 @app.route("/yesorno")
 def show_madlib_form():
